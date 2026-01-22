@@ -1,65 +1,421 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Home() {
+
+  // ✅ Hooks INSIDE component
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState("");
+  const [service, setService] = useState("");
+  const [time, setTime] = useState("");
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main>
+      <Navbar />
+
+      {/* HERO SECTION */}
+      <section className="bg-[#f6f1eb] py-24">
+        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+          <div>
+            <h1 className="text-5xl font-serif text-gray-800 mb-6">
+              Discover Inner Balance
+            </h1>
+
+            <p className="text-gray-600 text-lg mb-8">
+              Experience premium massage and wellness therapies designed to
+              relax your body, calm your mind, and restore your energy.
+            </p>
+
+            <button
+              onClick={() => setOpen(true)}
+              className="bg-[#8b6f4e] text-white px-8 py-4 rounded-full hover:bg-[#6e573d] transition"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              Book Now
+            </button>
+          </div>
+
+          <div className="rounded-3xl overflow-hidden shadow-xl h-[400px]">
+            <video
+              src="/videos/spavdo1.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+
         </div>
-      </main>
+      </section>
+
+      {/* BOOKING POPUP */}
+{open && (
+  <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+
+    <div className="bg-white p-8 rounded-3xl w-full max-w-md relative">
+
+      {/* CLOSE */}
+      <button
+        onClick={() => setOpen(false)}
+        className="absolute top-3 right-4 text-xl"
+      >
+        ✕
+      </button>
+
+      {/* TITLE */}
+      <h2 className="text-2xl font-serif mb-6 text-center">
+        Book Now
+      </h2>
+
+      <div className="space-y-4">
+
+        {/* NAME */}
+        <input
+          type="text"
+          placeholder="Full Name"
+          className="w-full border p-3 rounded-lg"
+        />
+
+        {/* PHONE */}
+        <div className="flex border rounded-lg overflow-hidden">
+          <span className="bg-gray-200 px-4 py-3">+91</span>
+          <input
+            type="tel"
+            placeholder="Enter 10 digit number"
+            className="w-full p-3 outline-none"
+          />
+        </div>
+
+        {/* DATE */}
+        <input
+          type="date"
+          className="w-full border p-3 rounded-lg"
+        />
+
+        {/* SERVICE */}
+        <select className="w-full border p-3 rounded-lg">
+          <option>Select Service</option>
+          <option>Swedish Massage</option>
+          <option>Deep Tissue</option>
+          <option>Aromatherapy</option>
+        </select>
+
+        {/* TIME */}
+        <select className="w-full border p-3 rounded-lg">
+          <option>Select Time</option>
+          <option>10:00 AM</option>
+          <option>12:00 PM</option>
+          <option>2:00 PM</option>
+          <option>4:00 PM</option>
+        </select>
+
+        {/* PAYMENT BUTTON */}
+        <button
+          onClick={() => {
+            const msg = encodeURIComponent(
+              "Hi, I want to book an appointment. Please guide me for payment."
+            );
+
+            window.open(
+              `https://t.me/Jacydodo?text=${msg}`,
+              "_blank"
+            );
+
+            setOpen(false);
+          }}
+          className="w-full bg-[#8b6f4e] text-white py-3 rounded-full"
+        >
+          Proceed to Payment
+        </button>
+
+      </div>
+    </div>
+  </div>
+)}
+
+
+      {/* SERVICES */}
+      <section className="py-20 bg-white text-center">
+        <h2 className="text-4xl font-serif mb-12">Our Wellness Services</h2>
+      </section>
+
+      {/* EXTRA SERVICES */}
+      <section className="py-20 bg-[#f6f1eb]">
+        <div className="max-w-6xl mx-auto px-6">
+
+          <h2 className="text-4xl font-serif text-center mb-12">
+            Our Premium Experiences
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+            {/* Card 1 */}
+            <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+
+              <video
+                src="/videos/spavdo2.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-52 w-full object-cover"
+              />
+
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2">
+                  Hot Stone Therapy
+                </h3>
+                <p className="text-gray-600">
+                  Warm stones to release deep tension.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+
+              <video
+                src="/videos/spavdo3.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-52 w-full object-cover"
+              />
+
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2">
+                  Couple Spa
+                </h3>
+                <p className="text-gray-600">
+                  Relax together in a romantic session.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+
+              <video
+                src="/videos/spavdo4.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-52 w-full object-cover"
+              />
+
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2">
+                  Luxury Facial
+                </h3>
+                <p className="text-gray-600">
+                  Premium glow facial treatment.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* VIDEO BANNER */}
+      <section className="relative h-[500px]">
+
+        <video
+          src="/videos/spavdo6.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute w-full h-full object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/40" />
+
+        <div className="relative z-10 h-full flex items-center justify-center text-white text-center">
+          <div>
+            <h2 className="text-5xl font-serif mb-4">
+              Experience Luxury
+            </h2>
+            <p>Premium wellness crafted for your body & soul</p>
+          </div>
+        </div>
+
+      </section>
+
+      {/* APPLY FORM */}
+      <section className="py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-6">
+
+          <h2 className="text-4xl font-serif text-center mb-6">
+            Work With InnerBloom
+          </h2>
+
+          <p className="text-center text-gray-600 mb-12">
+            Are you a professional male therapist? Apply now and join our premium team.
+          </p>
+
+          <ApplyForm />
+
+        </div>
+      </section>
+      <Footer />
+    </main>
+  );
+}
+function ApplyForm() {
+  const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [experience, setExperience] = useState("");
+  const [services, setServices] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // ⛔ STOP page reload
+  
+    if (phone.length !== 10) {
+      setError("Mobile number must be exactly 10 digits");
+      return;
+    }
+  
+    try {
+      const res = await fetch("/api/telegram", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          city,
+          experience,
+          services,
+          message,
+        }),
+      });
+  
+      if (!res.ok) throw new Error("Failed");
+  
+      alert("Application sent successfully!");
+      setName("");
+    setPhone("");
+    setEmail("");
+    setCity("");
+    setExperience("");
+    setServices("");
+    setMessage("");
+    setError("");
+    } catch (err) {
+      alert("Something went wrong!");
+    }
+  };
+  
+  return (
+    <div className="bg-[#f6f1eb] p-10 rounded-3xl shadow-lg">
+
+      <form
+        onSubmit={handleSubmit}
+        className="grid md:grid-cols-2 gap-6"
+      >
+
+        <input
+          type="text"
+          placeholder="Full Name"
+          className="border p-4 rounded-xl"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+
+        <input
+          type="number"
+          placeholder="Age"
+          className="border p-4 rounded-xl"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          required
+        />
+
+        {/* PHONE */}
+        <div className="flex border rounded-xl overflow-hidden">
+          <span className="bg-gray-200 px-4 py-4">+91</span>
+
+          <input
+            value={phone}
+            onChange={(e) => {
+              const v = e.target.value.replace(/\D/g, "");
+              if (v.length <= 10) setPhone(v);
+            }}
+            placeholder="10 digit mobile number"
+            className="w-full p-4 outline-none"
+            required
+          />
+        </div>
+        <input
+          type="email"
+          placeholder="Email Address"
+          className="border p-4 rounded-xl"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="text"
+          placeholder="City"
+          className="border p-4 rounded-xl"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+
+        <input
+          type="number"
+          placeholder="Years of Experience"
+          className="border p-4 rounded-xl"
+          value={experience}
+          onChange={(e) => setExperience(e.target.value)}
+        />
+
+        <textarea
+          placeholder="Services you can provide"
+          className="border p-4 rounded-xl md:col-span-2"
+          rows={3}
+          value={services}
+          onChange={(e) => setServices(e.target.value)}
+        />
+
+        <textarea
+          placeholder="Why should we hire you?"
+          className="border p-4 rounded-xl md:col-span-2"
+          rows={3}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+
+        {error && (
+          <p className="text-red-500 md:col-span-2">
+            {error}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          className="md:col-span-2 bg-[#8b6f4e] text-white py-4 rounded-full hover:bg-[#6e573d]"
+        >
+          Submit Application
+        </button>
+
+      </form>
     </div>
   );
 }
+
+
