@@ -18,10 +18,11 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section className="bg-[#f6f1eb] py-24">
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div className="w-full max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+
 
           <div>
-            <h1 className="text-5xl font-serif text-gray-800 mb-6">
+          <h1 className="text-3xl md:text-5xl font-serif text-gray-800 mb-6">
               Discover Inner Balance
             </h1>
 
@@ -38,7 +39,7 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="rounded-3xl overflow-hidden shadow-xl h-[400px]">
+          <div className="rounded-3xl overflow-hidden shadow-xl w-full aspect-[4/3]">
             <video
               src="/videos/spavdo1.mp4"
               autoPlay
