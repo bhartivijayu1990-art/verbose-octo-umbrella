@@ -7,7 +7,7 @@ export default function Navbar() {
 
   return (
     <header className="bg-white shadow-sm">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="w-full sm:max-w-6xl sm:mx-auto px-4 flex justify-between items-center">
         
         {/* Logo */}
         <h1 className="text-2xl font-serif">

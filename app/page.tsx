@@ -18,7 +18,7 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section className="bg-[#f6f1eb] py-24">
-      <div className="w-full max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+      <div className="w-full sm:max-w-6xl sm:mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
 
 
           <div>
