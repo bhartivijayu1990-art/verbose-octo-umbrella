@@ -8,21 +8,19 @@ export async function POST(req: Request) {
     const data = await req.json();
 
     const {
-      fullName,
-      age,
+      name,
       phone,
       email,
       city,
       experience,
       services,
-      reason,
+      message,
     } = data;
 
-    const message = `
+    const text = `
 🌿 *New Therapist Application*
 
-👤 Name: ${fullName}
-🎂 Age: ${age}
+👤 Name: ${name}
 📞 Phone: +91 ${phone}
 📧 Email: ${email}
 🏙️ City: ${city}
@@ -32,27 +30,30 @@ export async function POST(req: Request) {
 ${services}
 
 ⭐ Why should we hire them?
-${reason}
+${message}
 
 🕒 ${new Date().toLocaleString()}
     `;
 
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: CHAT_ID,
-        text: message,
+        text,
         parse_mode: "Markdown",
       }),
     });
 
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("Telegram API error:", err);
+      return NextResponse.json({ success: false }, { status: 500 });
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Application Telegram Error:", error);
-    return NextResponse.json(
-      { success: false },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false }, { status: 500 });
   }
 }
