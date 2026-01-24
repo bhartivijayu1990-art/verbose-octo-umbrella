@@ -308,6 +308,7 @@ function ApplyForm() {
   
       alert("Application sent successfully!");
       setName("");
+      setAge("");
     setPhone("");
     setEmail("");
     setCity("");
