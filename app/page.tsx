@@ -17,7 +17,7 @@ export default function Home() {
       <Navbar />
 
       {/* HERO SECTION */}
-      <section className="bg-[#f6f1eb] py-24">
+      <section className="w-screen bg-[#f6f1eb] py-24">
       <div className="w-full sm:max-w-6xl sm:mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
 
 
