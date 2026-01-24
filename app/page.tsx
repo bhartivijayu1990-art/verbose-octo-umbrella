@@ -323,98 +323,123 @@ function ApplyForm() {
   return (
     <div className="bg-[#f6f1eb] p-10 rounded-3xl shadow-lg">
 
-      <form
-        onSubmit={handleSubmit}
-        className="grid md:grid-cols-2 gap-6"
-      >
+<form
+  onSubmit={handleSubmit}
+  className="grid md:grid-cols-2 gap-6 bg-white text-gray-900 p-6 rounded-2xl shadow-lg"
+>
+  <input
+    type="text"
+    placeholder="Full Name"
+    className="border border-gray-400 p-4 rounded-xl 
+               bg-white text-gray-900 
+               placeholder-gray-500 
+               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
+    value={name}
+    onChange={(e) => setName(e.target.value)}
+    required
+  />
 
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="border p-4 rounded-xl"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+  <input
+    type="number"
+    placeholder="Age"
+    className="border border-gray-400 p-4 rounded-xl 
+               bg-white text-gray-900 
+               placeholder-gray-500 
+               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
+    value={age}
+    onChange={(e) => setAge(e.target.value)}
+    required
+  />
 
-        <input
-          type="number"
-          placeholder="Age"
-          className="border p-4 rounded-xl"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-          required
-        />
+  {/* PHONE */}
+  <div className="flex border border-gray-400 rounded-xl overflow-hidden bg-white">
+    <span className="bg-gray-300 text-gray-900 px-4 py-4">+91</span>
+    <input
+      value={phone}
+      onChange={(e) => {
+        const v = e.target.value.replace(/\D/g, "");
+        if (v.length <= 10) setPhone(v);
+      }}
+      placeholder="10 digit mobile number"
+      className="w-full p-4 bg-white text-gray-900 
+                 placeholder-gray-500 
+                 focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
+      required
+    />
+  </div>
 
-        {/* PHONE */}
-        <div className="flex border rounded-xl overflow-hidden">
-          <span className="bg-gray-200 px-4 py-4">+91</span>
+  <input
+    type="email"
+    placeholder="Email Address"
+    className="border border-gray-400 p-4 rounded-xl 
+               bg-white text-gray-900 
+               placeholder-gray-500 
+               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+  />
 
-          <input
-            value={phone}
-            onChange={(e) => {
-              const v = e.target.value.replace(/\D/g, "");
-              if (v.length <= 10) setPhone(v);
-            }}
-            placeholder="10 digit mobile number"
-            className="w-full p-4 outline-none"
-            required
-          />
-        </div>
-        <input
-          type="email"
-          placeholder="Email Address"
-          className="border p-4 rounded-xl"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+  <input
+    type="text"
+    placeholder="City"
+    className="border border-gray-400 p-4 rounded-xl 
+               bg-white text-gray-900 
+               placeholder-gray-500 
+               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
+    value={city}
+    onChange={(e) => setCity(e.target.value)}
+  />
 
-        <input
-          type="text"
-          placeholder="City"
-          className="border p-4 rounded-xl"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
+  <input
+    type="number"
+    placeholder="Years of Experience"
+    className="border border-gray-400 p-4 rounded-xl 
+               bg-white text-gray-900 
+               placeholder-gray-500 
+               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
+    value={experience}
+    onChange={(e) => setExperience(e.target.value)}
+  />
 
-        <input
-          type="number"
-          placeholder="Years of Experience"
-          className="border p-4 rounded-xl"
-          value={experience}
-          onChange={(e) => setExperience(e.target.value)}
-        />
+  <textarea
+    placeholder="Services you can provide"
+    className="border border-gray-400 p-4 rounded-xl 
+               bg-white text-gray-900 
+               placeholder-gray-500 
+               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e] 
+               md:col-span-2"
+    rows={3}
+    value={services}
+    onChange={(e) => setServices(e.target.value)}
+  />
 
-        <textarea
-          placeholder="Services you can provide"
-          className="border p-4 rounded-xl md:col-span-2"
-          rows={3}
-          value={services}
-          onChange={(e) => setServices(e.target.value)}
-        />
+  <textarea
+    placeholder="Why should we hire you?"
+    className="border border-gray-400 p-4 rounded-xl 
+               bg-white text-gray-900 
+               placeholder-gray-500 
+               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e] 
+               md:col-span-2"
+    rows={3}
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+  />
 
-        <textarea
-          placeholder="Why should we hire you?"
-          className="border p-4 rounded-xl md:col-span-2"
-          rows={3}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+  {error && (
+    <p className="text-red-600 md:col-span-2">
+      {error}
+    </p>
+  )}
 
-        {error && (
-          <p className="text-red-500 md:col-span-2">
-            {error}
-          </p>
-        )}
+  <button
+    type="submit"
+    className="md:col-span-2 bg-[#8b6f4e] text-white py-4 rounded-full hover:bg-[#6e573d] transition"
+  >
+    Submit Application
+  </button>
+</form>
 
-        <button
-          type="submit"
-          className="md:col-span-2 bg-[#8b6f4e] text-white py-4 rounded-full hover:bg-[#6e573d]"
-        >
-          Submit Application
-        </button>
 
-      </form>
     </div>
   );
 }
