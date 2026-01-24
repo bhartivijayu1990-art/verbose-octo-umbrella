@@ -13,7 +13,7 @@ export default function Home() {
   const [time, setTime] = useState("");
 
   return (
-    <main>
+    <main className="w-full overflow-x-hidden">
       <Navbar />
 
       {/* HERO SECTION */}
