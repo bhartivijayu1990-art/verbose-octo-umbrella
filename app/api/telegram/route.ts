@@ -1,57 +1,65 @@
 import { NextResponse } from "next/server";
 
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
+const CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
+
 export async function POST(req: Request) {
   try {
-    console.log("API HIT");
+    const data = await req.json();
 
-    const body = await req.json();
-    console.log("BODY:", body);
-
-    const BOT_TOKEN = process.env.TG_BOT_TOKEN;
-    const CHAT_ID = process.env.TG_CHAT_ID;
-
-    console.log("TOKEN:", BOT_TOKEN);
-    console.log("CHAT ID:", CHAT_ID);
-
-    if (!BOT_TOKEN || !CHAT_ID) {
-      return NextResponse.json(
-        { error: "ENV missing" },
-        { status: 500 }
-      );
-    }
+    const {
+      name,
+      age,
+      gender,
+      phone,
+      telegram,
+      email,
+      city,
+      experience,
+      services,
+      message,
+    } = data;
 
     const text = `
-NEW APPLICATION
-Name: ${body.name}
-Phone: +91${body.phone}
-Email: ${body.email}
-City: ${body.city}
-Experience: ${body.experience}
-Services: ${body.services}
-Message: ${body.message}
+🌿 *New Therapist Application*
+
+👤 Name: ${name}
+🎂 Age: ${age}
+🚻 Gender: ${gender}
+📞 Phone: +91 ${phone}
+💬 Telegram: ${telegram}
+📧 Email: ${email}
+🏙️ City: ${city}
+🧠 Experience: ${experience} years
+
+💆 Services:
+${services}
+
+⭐ Why should we hire them?
+${message}
+
+🕒 ${new Date().toLocaleString()}
 `;
 
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-    const res = await fetch(url, {
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: CHAT_ID,
         text,
+        parse_mode: "Markdown",
       }),
     });
 
-    const data = await res.json();
-    console.log("TELEGRAM RESPONSE:", data);
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("Telegram API error:", err);
+      return NextResponse.json({ success: false }, { status: 500 });
+    }
 
     return NextResponse.json({ success: true });
-
-  } catch (err) {
-    console.error("SERVER ERROR:", err);
-    return NextResponse.json(
-      { error: "Server crash" },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error("Telegram route error:", error);
+    return NextResponse.json({ success: false }, { status: 500 });
   }
 }

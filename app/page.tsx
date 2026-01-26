@@ -274,7 +274,9 @@ function ApplyForm() {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
+  const [telegram, setTelegram] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [experience, setExperience] = useState("");
@@ -295,7 +297,10 @@ function ApplyForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
+          age,
+          gender,
           phone,
+          telegram,
           email,
           city,
           experience,
@@ -304,12 +309,17 @@ function ApplyForm() {
         }),
       });
   
-      if (!res.ok) throw new Error("Failed");
+      const data = await res.json();
+if (!res.ok || !data.success) {
+  throw new Error("Failed");
+}
   
       alert("Application sent successfully!");
       setName("");
       setAge("");
+      setGender("");
     setPhone("");
+    setTelegram("");
     setEmail("");
     setCity("");
     setExperience("");
@@ -317,6 +327,7 @@ function ApplyForm() {
     setMessage("");
     setError("");
     } catch (err) {
+      console.error(err);
       alert("Something went wrong!");
     }
   };
@@ -351,6 +362,45 @@ function ApplyForm() {
     onChange={(e) => setAge(e.target.value)}
     required
   />
+  <div className="flex flex-col gap-2">
+  <label className="text-sm font-medium text-gray-700">Gender</label>
+  <div className="flex gap-6">
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="Male"
+        checked={gender === "Male"}
+        onChange={(e) => setGender(e.target.value)}
+        required
+      />
+      Male
+    </label>
+
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="Female"
+        checked={gender === "Female"}
+        onChange={(e) => setGender(e.target.value)}
+      />
+      Female
+    </label>
+
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="Other"
+        checked={gender === "Other"}
+        onChange={(e) => setGender(e.target.value)}
+      />
+      Other
+    </label>
+  </div>
+</div>
+
 
   {/* PHONE */}
   <div className="flex border border-gray-400 rounded-xl overflow-hidden bg-white">
@@ -379,6 +429,16 @@ function ApplyForm() {
     value={email}
     onChange={(e) => setEmail(e.target.value)}
   />
+
+  <input
+  type="text"
+  placeholder="Telegram Number or ID"
+  className="border p-4 rounded-xl"
+  value={telegram}
+  onChange={(e) => setTelegram(e.target.value)}
+  required
+/>
+
 
   <input
     type="text"
