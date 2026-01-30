@@ -4,7 +4,7 @@ export default function Footer() {
       {/* FLOATING BUTTONS */}
       <div className="fixed bottom-5 right-5 flex flex-col gap-3 z-50">
         <a
-          href="https://t.me/Jacydodo"
+          href="https://t.me/midnightmuse12am"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-white p-3 rounded-full shadow-lg hover:scale-110 transition"

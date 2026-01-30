@@ -9,7 +9,7 @@ export default function Membership() {
 
     localStorage.setItem("member", "true");
 
-    window.location.href = `https://t.me/Jacydodo?text=${msg}`;
+    window.location.href = `https://t.me/midnightmuse12am?text=${msg}`;
   };
 
   return (

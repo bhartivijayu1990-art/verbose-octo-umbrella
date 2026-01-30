@@ -89,13 +89,13 @@ export default function Book() {
       `Hi, I want to book a massage.\nService: ${service}\nDate: ${date}\nTime: ${time}`
     );
     <a
-  href="https://t.me/Jacydodo"
+  href="https://t.me/midnightmuse12am"
   target="_blank"
 >
 Pay on Telegram
 </a>
     window.location.href = 
-      `https://t.me/Jacydodo?text=${msg}`;
+      `https://t.me/midnightmuse12am?text=${msg}`;
 
   }}
   className="w-full bg-[#8b6f4e] text-white py-3 rounded-full"

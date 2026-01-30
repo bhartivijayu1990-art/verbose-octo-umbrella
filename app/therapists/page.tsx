@@ -62,7 +62,7 @@ export default function Therapists() {
       `Hi, I want to book an appointment with ${therapist}. Please guide me for payment.`
     );
 
-    window.location.href = `https://t.me/Jacydodo?text=${message}`;
+    window.location.href = `https://t.me/midnightmuse12am?text=${message}`;
   }}
   className="w-full bg-[#8b6f4e] text-white py-3 rounded-full"
 >

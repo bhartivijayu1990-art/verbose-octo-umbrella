@@ -52,7 +52,7 @@ export default function Services() {
                 const msg = encodeURIComponent(
                   `Hi, I want to book ${s.title}. Please guide me for payment.`
                 );
-                window.location.href = `https://t.me/Jacydodo?text=${msg}`;
+                window.location.href = `https://t.me/midnightmuse12am?text=${msg}`;
               }}
               className="bg-[#8b6f4e] text-white px-6 py-2 rounded-full"
             >
