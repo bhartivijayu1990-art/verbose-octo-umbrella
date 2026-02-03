@@ -18,11 +18,11 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section className="w-screen bg-[#f6f1eb] py-24">
-      <div className="w-full sm:max-w-6xl sm:mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div className="w-full sm:max-w-6xl sm:mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
 
 
           <div>
-          <h1 className="text-3xl md:text-5xl font-serif text-gray-800 mb-6">
+            <h1 className="text-3xl md:text-5xl font-serif text-gray-800 mb-6">
               Discover Inner Balance
             </h1>
 
@@ -54,89 +54,89 @@ export default function Home() {
       </section>
 
       {/* BOOKING POPUP */}
-{open && (
-  <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+      {open && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
 
-    <div className="bg-white p-8 rounded-3xl w-full max-w-md relative">
+          <div className="bg-white p-8 rounded-3xl w-full max-w-md relative">
 
-      {/* CLOSE */}
-      <button
-        onClick={() => setOpen(false)}
-        className="absolute top-3 right-4 text-xl"
-      >
-        ✕
-      </button>
+            {/* CLOSE */}
+            <button
+              onClick={() => setOpen(false)}
+              className="absolute top-3 right-4 text-xl"
+            >
+              ✕
+            </button>
 
-      {/* TITLE */}
-      <h2 className="text-2xl font-serif mb-6 text-center">
-        Book Now
-      </h2>
+            {/* TITLE */}
+            <h2 className="text-2xl font-serif mb-6 text-center">
+              Book Now
+            </h2>
 
-      <div className="space-y-4">
+            <div className="space-y-4">
 
-        {/* NAME */}
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="w-full border p-3 rounded-lg"
-        />
+              {/* NAME */}
+              <input
+                type="text"
+                placeholder="Full Name"
+                className="w-full border p-3 rounded-lg"
+              />
 
-        {/* PHONE */}
-        <div className="flex border rounded-lg overflow-hidden">
-          <span className="bg-gray-200 px-4 py-3">+91</span>
-          <input
-            type="tel"
-            placeholder="Enter 10 digit number"
-            className="w-full p-3 outline-none"
-          />
+              {/* PHONE */}
+              <div className="flex border rounded-lg overflow-hidden">
+                <span className="bg-gray-200 px-4 py-3">+91</span>
+                <input
+                  type="tel"
+                  placeholder="Enter 10 digit number"
+                  className="w-full p-3 outline-none"
+                />
+              </div>
+
+              {/* DATE */}
+              <input
+                type="date"
+                className="w-full border p-3 rounded-lg"
+              />
+
+              {/* SERVICE */}
+              <select className="w-full border p-3 rounded-lg">
+                <option>Select Service</option>
+                <option>Swedish Massage</option>
+                <option>Deep Tissue</option>
+                <option>Aromatherapy</option>
+              </select>
+
+              {/* TIME */}
+              <select className="w-full border p-3 rounded-lg">
+                <option>Select Time</option>
+                <option>10:00 AM</option>
+                <option>12:00 PM</option>
+                <option>2:00 PM</option>
+                <option>4:00 PM</option>
+              </select>
+
+              {/* PAYMENT BUTTON */}
+              <button
+                onClick={() => {
+                  const msg = encodeURIComponent(
+                    "Hi, I want to book an appointment. Please guide me for payment."
+                  );
+
+                  window.open(
+                    `https://t.me/Jacydodo?text=${msg}`,
+                    "_blank"
+                  );
+
+                  setOpen(false);
+                }}
+                className="w-full bg-[#8b6f4e] text-white py-3 rounded-full"
+              >
+                Proceed to Payment
+              </button>
+
+            </div>
+          </div>
         </div>
-
-        {/* DATE */}
-        <input
-          type="date"
-          className="w-full border p-3 rounded-lg"
-        />
-
-        {/* SERVICE */}
-        <select className="w-full border p-3 rounded-lg">
-          <option>Select Service</option>
-          <option>Swedish Massage</option>
-          <option>Deep Tissue</option>
-          <option>Aromatherapy</option>
-        </select>
-
-        {/* TIME */}
-        <select className="w-full border p-3 rounded-lg">
-          <option>Select Time</option>
-          <option>10:00 AM</option>
-          <option>12:00 PM</option>
-          <option>2:00 PM</option>
-          <option>4:00 PM</option>
-        </select>
-
-        {/* PAYMENT BUTTON */}
-        <button
-          onClick={() => {
-            const msg = encodeURIComponent(
-              "Hi, I want to book an appointment. Please guide me for payment."
-            );
-
-            window.open(
-              `https://t.me/Jacydodo?text=${msg}`,
-              "_blank"
-            );
-
-            setOpen(false);
-          }}
-          className="w-full bg-[#8b6f4e] text-white py-3 rounded-full"
-        >
-          Proceed to Payment
-        </button>
-
-      </div>
-    </div>
-  </div>
-)}
+      )}
 
 
       {/* SERVICES */}
@@ -282,15 +282,21 @@ function ApplyForm() {
   const [experience, setExperience] = useState("");
   const [services, setServices] = useState("");
   const [message, setMessage] = useState("");
+  const [agreed, setAgreed] = useState(false); // ✅ NEW
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // ⛔ STOP page reload
-  
+    e.preventDefault();
+
+    if (!agreed) {
+      setError("You must accept the Terms & Conditions");
+      return;
+    }
+
     if (phone.length !== 10) {
       setError("Mobile number must be exactly 10 digits");
       return;
     }
-  
+
     try {
       const res = await fetch("/api/telegram", {
         method: "POST",
@@ -306,203 +312,196 @@ function ApplyForm() {
           experience,
           services,
           message,
+          termsAccepted: agreed, // ✅ NEW
         }),
       });
-  
+
       const data = await res.json();
-if (!res.ok || !data.success) {
-  throw new Error("Failed");
-}
-  
+      if (!res.ok || !data.success) {
+        throw new Error("Failed");
+      }
+
       alert("Application sent successfully!");
       setName("");
       setAge("");
       setGender("");
-    setPhone("");
-    setTelegram("");
-    setEmail("");
-    setCity("");
-    setExperience("");
-    setServices("");
-    setMessage("");
-    setError("");
+      setPhone("");
+      setTelegram("");
+      setEmail("");
+      setCity("");
+      setExperience("");
+      setServices("");
+      setMessage("");
+      setAgreed(false);
+      setError("");
     } catch (err) {
       console.error(err);
       alert("Something went wrong!");
     }
   };
-  
+
   return (
     <div className="bg-[#f6f1eb] p-10 rounded-3xl shadow-lg">
+      <form
+        onSubmit={handleSubmit}
+        className="grid md:grid-cols-2 gap-6 bg-white text-gray-900 p-6 rounded-2xl shadow-lg"
+      >
+        <input
+          type="text"
+          placeholder="Full Name"
+          className="border border-gray-400 p-4 rounded-xl bg-white text-gray-900"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
 
-<form
-  onSubmit={handleSubmit}
-  className="grid md:grid-cols-2 gap-6 bg-white text-gray-900 p-6 rounded-2xl shadow-lg"
->
-  <input
-    type="text"
-    placeholder="Full Name"
-    className="border border-gray-400 p-4 rounded-xl 
-               bg-white text-gray-900 
-               placeholder-gray-500 
-               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
-    value={name}
-    onChange={(e) => setName(e.target.value)}
-    required
-  />
+        <input
+          type="number"
+          placeholder="Age"
+          className="border border-gray-400 p-4 rounded-xl bg-white text-gray-900"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          required
+        />
 
-  <input
-    type="number"
-    placeholder="Age"
-    className="border border-gray-400 p-4 rounded-xl 
-               bg-white text-gray-900 
-               placeholder-gray-500 
-               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
-    value={age}
-    onChange={(e) => setAge(e.target.value)}
-    required
-  />
-  <div className="flex flex-col gap-2">
-  <label className="text-sm font-medium text-gray-700">Gender</label>
-  <div className="flex gap-6">
-    <label className="flex items-center gap-2">
-      <input
-        type="radio"
-        name="gender"
-        value="Male"
-        checked={gender === "Male"}
-        onChange={(e) => setGender(e.target.value)}
-        required
-      />
-      Male
-    </label>
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-gray-700">Gender</label>
+          <div className="flex gap-6">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="gender"
+                value="Male"
+                checked={gender === "Male"}
+                onChange={(e) => setGender(e.target.value)}
+                required
+              />
+              Male
+            </label>
 
-    <label className="flex items-center gap-2">
-      <input
-        type="radio"
-        name="gender"
-        value="Female"
-        checked={gender === "Female"}
-        onChange={(e) => setGender(e.target.value)}
-      />
-      Female
-    </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="gender"
+                value="Female"
+                checked={gender === "Female"}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              Female
+            </label>
 
-    <label className="flex items-center gap-2">
-      <input
-        type="radio"
-        name="gender"
-        value="Other"
-        checked={gender === "Other"}
-        onChange={(e) => setGender(e.target.value)}
-      />
-      Other
-    </label>
-  </div>
-</div>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="gender"
+                value="Other"
+                checked={gender === "Other"}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              Other
+            </label>
+          </div>
+        </div>
 
+        <div className="flex border border-gray-400 rounded-xl overflow-hidden bg-white">
+          <span className="bg-gray-300 text-gray-900 px-4 py-4">+91</span>
+          <input
+            value={phone}
+            onChange={(e) => {
+              const v = e.target.value.replace(/\D/g, "");
+              if (v.length <= 10) setPhone(v);
+            }}
+            placeholder="10 digit mobile number"
+            className="w-full p-4 bg-white text-gray-900"
+            required
+          />
+        </div>
 
-  {/* PHONE */}
-  <div className="flex border border-gray-400 rounded-xl overflow-hidden bg-white">
-    <span className="bg-gray-300 text-gray-900 px-4 py-4">+91</span>
-    <input
-      value={phone}
-      onChange={(e) => {
-        const v = e.target.value.replace(/\D/g, "");
-        if (v.length <= 10) setPhone(v);
-      }}
-      placeholder="10 digit mobile number"
-      className="w-full p-4 bg-white text-gray-900 
-                 placeholder-gray-500 
-                 focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
-      required
-    />
-  </div>
+        <input
+          type="email"
+          placeholder="Email Address"
+          className="border border-gray-400 p-4 rounded-xl bg-white text-gray-900"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-  <input
-    type="email"
-    placeholder="Email Address"
-    className="border border-gray-400 p-4 rounded-xl 
-               bg-white text-gray-900 
-               placeholder-gray-500 
-               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
-    value={email}
-    onChange={(e) => setEmail(e.target.value)}
-  />
+        <input
+          type="text"
+          placeholder="Telegram Number or ID"
+          className="border p-4 rounded-xl"
+          value={telegram}
+          onChange={(e) => setTelegram(e.target.value)}
+          required
+        />
 
-  <input
-  type="text"
-  placeholder="Telegram Number or ID"
-  className="border p-4 rounded-xl"
-  value={telegram}
-  onChange={(e) => setTelegram(e.target.value)}
-  required
-/>
+        <input
+          type="text"
+          placeholder="City"
+          className="border border-gray-400 p-4 rounded-xl bg-white text-gray-900"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
 
+        <input
+          type="number"
+          placeholder="Years of Experience"
+          className="border border-gray-400 p-4 rounded-xl bg-white text-gray-900"
+          value={experience}
+          onChange={(e) => setExperience(e.target.value)}
+        />
 
-  <input
-    type="text"
-    placeholder="City"
-    className="border border-gray-400 p-4 rounded-xl 
-               bg-white text-gray-900 
-               placeholder-gray-500 
-               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
-    value={city}
-    onChange={(e) => setCity(e.target.value)}
-  />
+        <textarea
+          placeholder="Services you can provide"
+          className="border border-gray-400 p-4 rounded-xl md:col-span-2"
+          rows={3}
+          value={services}
+          onChange={(e) => setServices(e.target.value)}
+        />
 
-  <input
-    type="number"
-    placeholder="Years of Experience"
-    className="border border-gray-400 p-4 rounded-xl 
-               bg-white text-gray-900 
-               placeholder-gray-500 
-               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e]"
-    value={experience}
-    onChange={(e) => setExperience(e.target.value)}
-  />
+        <textarea
+          placeholder="Why should we hire you?"
+          className="border border-gray-400 p-4 rounded-xl md:col-span-2"
+          rows={3}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
 
-  <textarea
-    placeholder="Services you can provide"
-    className="border border-gray-400 p-4 rounded-xl 
-               bg-white text-gray-900 
-               placeholder-gray-500 
-               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e] 
-               md:col-span-2"
-    rows={3}
-    value={services}
-    onChange={(e) => setServices(e.target.value)}
-  />
+        {error && (
+          <p className="text-red-600 md:col-span-2">{error}</p>
+        )}
 
-  <textarea
-    placeholder="Why should we hire you?"
-    className="border border-gray-400 p-4 rounded-xl 
-               bg-white text-gray-900 
-               placeholder-gray-500 
-               focus:outline-none focus:ring-2 focus:ring-[#8b6f4e] 
-               md:col-span-2"
-    rows={3}
-    value={message}
-    onChange={(e) => setMessage(e.target.value)}
-  />
+        {/* ✅ TERMS CHECKBOX */}
+        <div className="md:col-span-2 flex items-start gap-2">
+          <input
+            type="checkbox"
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+            className="mt-1"
+          />
+          <label className="text-sm text-gray-700">
+            I agree to the{" "}
+            <a href="/terms" target="_blank" className="text-blue-600 underline">
+              Terms & Conditions
+            </a>
+          </label>
+        </div>
 
-  {error && (
-    <p className="text-red-600 md:col-span-2">
-      {error}
-    </p>
-  )}
-
-  <button
-    type="submit"
-    className="md:col-span-2 bg-[#8b6f4e] text-white py-4 rounded-full hover:bg-[#6e573d] transition"
-  >
-    Submit Application
-  </button>
-</form>
-
-
+        {/* ✅ DISABLED BUTTON */}
+        <button
+          type="submit"
+          disabled={!agreed}
+          className={`md:col-span-2 py-4 rounded-full transition text-white ${
+            agreed
+              ? "bg-[#8b6f4e] hover:bg-[#6e573d]"
+              : "bg-gray-400 cursor-not-allowed"
+          }`}
+        >
+          Submit Application
+        </button>
+      </form>
     </div>
   );
 }
+
 
 

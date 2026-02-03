@@ -45,7 +45,7 @@ export default function Membership() {
     const msg = encodeURIComponent(
       "Hi, I want to subscribe to PREMIUM membership."
     );
-    window.location.href = `https://t.me/Jacydodo?text=${msg}`;
+    window.location.href = `https://t.me/midnightmuse12am?text=${msg}`;
   }}
   className="bg-[#8b6f4e] text-white px-6 py-3 rounded-full"
 >
@@ -63,7 +63,7 @@ export default function Membership() {
     const msg = encodeURIComponent(
       "Hi, I want to subscribe to ELITE membership."
     );
-    window.location.href = `https://t.me/Jacydodo?text=${msg}`;
+    window.location.href = `https://t.me/midnightmuse12am?text=${msg}`;
   }}
   className="bg-[#8b6f4e] text-white px-6 py-3 rounded-full"
 >
